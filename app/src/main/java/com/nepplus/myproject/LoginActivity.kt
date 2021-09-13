@@ -42,6 +42,11 @@ class LoginActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+        binding.signUpBtn.setOnClickListener {
+            val myIntent = Intent(mContext, SignUpActivity::class.java)
+            startActivity(myIntent)
+        }
+
         binding.kakaoLoginBtn.setOnClickListener {
             UserApiClient.instance.loginWithKakaoAccount(mContext) { token, error ->
                 if (error != null) {
