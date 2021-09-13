@@ -60,6 +60,9 @@ class LoginActivity : BaseActivity() {
                         Log.d("토큰", basicResponse.data.token)
                         ContextUtil.setToken(mContext, basicResponse.data.token)
 
+//                        Toast.makeText(mContext, basicResponse.data.user.email, Toast.LENGTH_SHORT).show()
+
+
 
                     } else {
                         val errorBodyStr = response.errorBody()!!.string()
