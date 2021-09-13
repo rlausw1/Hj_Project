@@ -2,9 +2,9 @@ package com.nepplus.myproject.utils
 
 import android.content.Context
 
-class ContextUtil  {
+class ContextUtil {
 
-    companion object{
+    companion object {
 
 //        토큰 등을 저장하는 메모장의 파일 명
 
@@ -16,13 +16,18 @@ class ContextUtil  {
         val TOKEN = "TOKEN"
 //        토큰 저장 / 조회
 
-        fun setToken(context: Context, token : String) {
+        fun setToken(context: Context, token: String) {
             val pref = context.getSharedPreferences(prefname, Context.MODE_PRIVATE)
             pref.edit().putString(TOKEN, token).apply()
         }
 
-    }
+        fun getToken(context: Context): String {
+            val pref = context.getSharedPreferences(prefname, Context.MODE_PRIVATE)
+            return  pref.getString(TOKEN, "")!!
 
+
+        }
+    }
 
 
 }
