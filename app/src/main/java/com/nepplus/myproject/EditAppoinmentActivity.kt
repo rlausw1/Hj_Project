@@ -2,16 +2,11 @@ package com.nepplus.myproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
-import com.nepplus.myproject.databinding.ActivityMainBinding
 
-class MainActivity : BaseActivity() {
-
-    lateinit var binding: ActivityMainBinding
-
+class EditAppoinmentActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setContentView(R.layout.activity_edit_appoinment)
         setupEvents()
         setValues()
     }
@@ -19,8 +14,10 @@ class MainActivity : BaseActivity() {
     override fun setupEvents() {
 
 
+
     }
 
     override fun setValues() {
+
     }
 }
