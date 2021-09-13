@@ -1,17 +1,16 @@
 package com.nepplus.myproject
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import com.nepplus.myproject.databinding.ActivityMainBinding
+import com.nepplus.myproject.databinding.ActivityLoginBinding
 
-class MainActivity : BaseActivity() {
+class LiginActivity : BaseActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         setupEvents()
         setValues()
 
