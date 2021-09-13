@@ -48,6 +48,22 @@ class LoginActivity : BaseActivity() {
         binding.loginButton.setReadPermissions("email")
         binding.facebookLoginBtn.setOnClickListener {
 //             우리가 붙인 버튼에 기능 활용
+//            커스터 버튼에 로그인 하고 돌아온 callback을 따로 설정
+
+            LoginManager.getInstance().registerCallback(callbackManager, object  : FacebookCallback<LoginResult>{
+                override fun onSuccess(result: LoginResult?) {
+                    Log.d("로그인 성공", "우리가 만든 버튼으로 성공")
+                }
+
+                override fun onCancel() {
+                }
+
+                override fun onError(error: FacebookException?) {
+                }
+
+
+            })
+
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
         }
 
@@ -55,26 +71,26 @@ class LoginActivity : BaseActivity() {
 
 
         // Callback registration
-        binding.loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
-            override fun onSuccess(loginResult: LoginResult?) {
-                // App code
-
-                Log.d("확인용", loginResult.toString())
-
-                val accessToken = AccessToken.getCurrentAccessToken()
-                Log.d("페북토큰", accessToken.toString())
-            }
-
-            override fun onCancel() {
-                // App code
-            }
-
-            override fun onError(exception: FacebookException) {
-                // App code
-
-
-            }
-        })
+//        binding.loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+//            override fun onSuccess(loginResult: LoginResult?) {
+//                // App code
+//
+//                Log.d("확인용", loginResult.toString())
+//
+//                val accessToken = AccessToken.getCurrentAccessToken()
+//                Log.d("페북토큰", accessToken.toString())
+//            }
+//
+//            override fun onCancel() {
+//                // App code
+//            }
+//
+//            override fun onError(exception: FacebookException) {
+//                // App code
+//
+//
+//            }
+//        })
 
 
     }
