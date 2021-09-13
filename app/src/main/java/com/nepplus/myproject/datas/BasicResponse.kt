@@ -7,7 +7,5 @@ import android.os.Message
 class BasicResponse(
     var code : Int,
     var message: String,
-    var data : DataResponse
-
-    ) {
+    var data : DataResponse    ) {
 }

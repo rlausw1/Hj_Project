@@ -20,6 +20,7 @@ import com.facebook.login.widget.LoginButton
 import com.google.gson.JsonObject
 import com.kakao.sdk.user.UserApiClient
 import com.nepplus.myproject.datas.BasicResponse
+import com.nepplus.myproject.utils.ContextUtil
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -59,6 +60,12 @@ class LoginActivity : BaseActivity() {
                     if (response.isSuccessful) {
                         val basicResponse = response.body()!!
                         Toast.makeText(mContext, basicResponse.message, Toast.LENGTH_SHORT).show()
+
+                        Log.d("토큰", basicResponse.data.token)
+                        ContextUtil.setToken(mContext, basicResponse.data.token)
+                        
+
+
                     }
                     else {
                         val errorBodyStr = response.errorBody()!!.string()
