@@ -21,4 +21,10 @@ interface ServerAPIService {
     fun postRequestLogin(@Field("email") email : String,
                          @Field("password") pw : String) : Call<BasicResponse>
 
+    @FormUrlEncoded
+    @POST("/user/social")
+    fun postRequestSocialLogin( @Field("provider") provider : String,
+    @Field("uid") id : String,
+    @Field("nick_name") name : String) : Call<BasicResponse>
+
 }

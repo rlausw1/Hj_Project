@@ -132,7 +132,21 @@ class LoginActivity : BaseActivity() {
 //                            페북에서 사용자를 구별하는 고유번호 => 우리 서버에 같이 저장. 회원가입 또는 로그인 근거자료로 활용용
                            Log.d("id값", id)
 
-//                            Todo - 페북이 알려준 이름/id값을 ,api 서버에 전달해서 소셜로그인 처리요청
+
+                            apiService.postRequestSocialLogin("facebook", id, name).enqueue(object  : Callback<BasicResponse> {
+                                override fun onResponse(
+                                    call: Call<BasicResponse>,
+                                    response: Response<BasicResponse>
+                                ) {
+                                    val basicResponse = response.body()!!
+                                    Toast.makeText(mContext, basicResponse.message, Toast.LENGTH_SHORT).show()
+                                }
+
+                                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+                                }
+
+
+                            })
 
                         }
 
