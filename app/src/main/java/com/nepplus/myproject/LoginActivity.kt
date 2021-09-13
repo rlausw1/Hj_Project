@@ -12,12 +12,18 @@ import java.security.MessageDigest
 import com.facebook.login.LoginResult
 
 import android.view.View
+import android.widget.Toast
 import com.facebook.*
 import com.facebook.login.LoginManager
 
 import com.facebook.login.widget.LoginButton
+import com.google.gson.JsonObject
 import com.kakao.sdk.user.UserApiClient
+import com.nepplus.myproject.datas.BasicResponse
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 
@@ -41,6 +47,35 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        binding.loginBtn.setOnClickListener {
+            val inputId = binding.emailEdt.text.toString()
+            val inputPw = binding.pwEdt.text.toString()
+//            POST -> /user로 로그인 시도
+            apiService.postRequestLogin(inputId, inputPw).enqueue(object : Callback<BasicResponse> {
+                override fun onResponse(
+                    call: Call<BasicResponse>,
+                    response: Response<BasicResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val basicResponse = response.body()!!
+                        Toast.makeText(mContext, basicResponse.message, Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        val errorBodyStr = response.errorBody()!!.string()
+                        val jsonObj = JSONObject(errorBodyStr)
+                        Log.d("응답본문", jsonObj.toString())
+                        val message = jsonObj.getString("message")
+                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+
+                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+                }
+
+            })
+        }
+
 
         binding.signUpBtn.setOnClickListener {
             val myIntent = Intent(mContext, SignUpActivity::class.java)
