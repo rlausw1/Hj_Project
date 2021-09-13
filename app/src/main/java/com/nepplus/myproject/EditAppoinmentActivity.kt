@@ -129,11 +129,10 @@ class EditAppoinmentActivity : BaseActivity() {
 
 //            서버에 API 호출
             apiService.postRequestAppointment(
-                ContextUtil.getToken(mContext),
                 inputTitle,
                 finalDatetime,
                 inputPlaceName,
-                lat, lng).enqueue(object : Callback<BasicResponse> {
+                lat,lng).enqueue(object : Callback<BasicResponse>  {
                 override fun onResponse(
                     call: Call<BasicResponse>,
                     response: Response<BasicResponse>
