@@ -67,6 +67,7 @@ class LoginActivity : BaseActivity() {
                         GlobalData.loginUser = basicResponse.data.user
 
 
+
                     } else {
                         val errorBodyStr = response.errorBody()!!.string()
                         val jsonObj = JSONObject(errorBodyStr)
