@@ -182,19 +182,17 @@ class LoginActivity : BaseActivity() {
                                                 Log.d("API 서버가 준 토큰값", basicResponse.data.token)
 
 //                                    ContextUtil 등으로 SharedPreferences로 토큰값 저장.
-                                                ContextUtil.setToken(
-                                                    mContext,
-                                                    basicResponse.data.token
-                                                )
+                                                ContextUtil.setToken(mContext, basicResponse.data.token)
                                                 GlobalData.loginUser = basicResponse.data.user
 
 //                                    메인화면으로 이동.
+                                                val myIntent = Intent(mContext, MainActivity::class.java)
+                                                startActivity(myIntent)
+                                                finish()
 
                                             }
 
-                                            override fun onFailure(
-                                                call: Call<BasicResponse>,
-                                                t: Throwable
+                                            override fun onFailure(call: Call<BasicResponse>,t: Throwable
                                             ) {
                                             }
 
