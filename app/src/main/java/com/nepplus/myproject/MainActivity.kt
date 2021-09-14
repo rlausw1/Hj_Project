@@ -32,6 +32,11 @@ class MainActivity : BaseActivity() {
         setValues()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getAppointmentListFromServer()
+    }
+
     override fun setupEvents() {
 
         binding.addAppoinmentBtn.setOnClickListener {
@@ -47,7 +52,7 @@ class MainActivity : BaseActivity() {
     override fun setValues() {
 
         Toast.makeText(mContext, "${GlobalData.loginUser!!.nickName}님 환영합니다!", Toast.LENGTH_SHORT).show()
-    getAppointmentListFromServer()
+//    getAppointmentListFromServer()
 
         mAdapter = AppointmentAdapter(mContext, R.layout.appointment_kist_item,mAppointmentList)
         binding.appointmentListView.adapter = mAdapter
@@ -63,6 +68,7 @@ class MainActivity : BaseActivity() {
             override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
 
                 val basicResponse = response.body()!!
+                mAppointmentList.clear()
 
 //                약속목록변수에 => 서버가 알려준 약속목록을 전부 추가.
                 mAppointmentList.addAll( basicResponse.data.appointments )
@@ -73,6 +79,8 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+                
+//                테스트 주석
 
             }
 

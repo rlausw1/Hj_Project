@@ -155,6 +155,12 @@ class EditAppoinmentActivity : BaseActivity() {
                     call: Call<BasicResponse>,
                     response: Response<BasicResponse>
                 ) {
+                    
+                    if ( response. isSuccessful) {
+                        Toast.makeText(mContext, "약속을 등록했습니다", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    
 
                     if (response.isSuccessful) {
                         Toast.makeText(mContext, "약속을 등록했습니다.", Toast.LENGTH_SHORT).show()
