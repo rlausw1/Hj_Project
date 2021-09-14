@@ -37,6 +37,10 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="j248fp8s0y" />
+
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="e4c4318472b8b7fc8cd73f765de11cf0"/>
 
 

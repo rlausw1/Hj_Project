@@ -1,6 +1,5 @@
 package com.nepplus.myproject.datas
 
-import android.provider.ContactsContract
 import com.google.gson.annotations.SerializedName
 
 class UserData(
