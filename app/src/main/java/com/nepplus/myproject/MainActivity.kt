@@ -79,6 +79,8 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+                
+//                테스트 주석
 
             }
 
