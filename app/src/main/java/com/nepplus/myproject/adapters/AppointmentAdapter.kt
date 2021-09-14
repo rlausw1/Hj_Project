@@ -1,6 +1,7 @@
 package com.nepplus.myproject.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.nepplus.myproject.R
+import com.nepplus.myproject.ViewMapActivity
 import com.nepplus.myproject.datas.AppointmentData
 
 
@@ -33,10 +35,17 @@ class AppointmentAdapter(
 
         val dateTimeTxt = row.findViewById<TextView>(R.id.dateTimeTxt)
         val placeNameTxt = row.findViewById<TextView>(R.id.placeNameTxt)
+        val viewPlaceMapBtn = row.findViewById<ImageView>(R.id.viewPlaceMapeBtn)
 
         titleTxt.text = data.title
         dateTimeTxt.text = data.createdAt
         placeNameTxt.text= data.placeName
+
+        viewPlaceMapBtn.setOnClickListener {
+            val myIntent = Intent(mContext, ViewMapActivity::class.java)
+            myIntent.putExtra("appointment", data)
+            mContext.startActivity(myIntent)
+        }
 
 
         return row

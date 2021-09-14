@@ -9,6 +9,13 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.MapFragment
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.nepplus.myproject.databinding.ActivityEditAppoinmentBinding
 import com.nepplus.myproject.datas.BasicResponse
 import com.nepplus.myproject.utils.ContextUtil
@@ -25,6 +32,10 @@ class EditAppoinmentActivity : BaseActivity() {
 //    선택한 약속 일시를 저장할 변수
 
     val mSelectedDateTime = Calendar.getInstance()  // 기본값 : 현재 시간
+
+//    선택한 약소강소
+    var mSelectedLat = 0.0 // Double을 넣을것임.
+        var mSelectedLng = 0.0 // Double을 넣을것임.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,8 +135,14 @@ class EditAppoinmentActivity : BaseActivity() {
             val inputPlaceName = binding.placeSearchEdt.text.toString()
 
 //            - 장소 위도/경도? (임시 : 학원 좌표 하드코딩)
-            val lat = 37.57794132143432
-            val lng = 127.03353823833795
+//            val lat = 37.57794132143432
+//            val lng = 127.03353823833795
+
+//            지도에서 클릭한 좌표로 위경도 첨부
+            if (mSelectedLat == 0.0 && mSelectedLng == 0.0) {
+                Toast.makeText(mContext, "약속장소 지도를 클릭", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
 
 //            서버에 API 호출
@@ -133,12 +150,17 @@ class EditAppoinmentActivity : BaseActivity() {
                 inputTitle,
                 finalDatetime,
                 inputPlaceName,
-                lat,lng).enqueue(object : Callback<BasicResponse>  {
+                mSelectedLat,mSelectedLng).enqueue(object : Callback<BasicResponse>  {
                 override fun onResponse(
                     call: Call<BasicResponse>,
                     response: Response<BasicResponse>
                 ) {
 
+                    if (response.isSuccessful) {
+                        Toast.makeText(mContext, "약속을 등록했습니다.", Toast.LENGTH_SHORT).show()
+                        finish()
+
+                    }
                 }
 
                 override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
@@ -160,7 +182,49 @@ class EditAppoinmentActivity : BaseActivity() {
 //        val mapView = MapView(mContext)
 //        binding.mapView.addView(mapView)
 
+        val fm = supportFragmentManager
+        val mapFragment = fm.findFragmentById(R.id.naverMapView) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.beginTransaction().add(R.id.naverMapView, it).commit()
+            }
+
+        mapFragment.getMapAsync {
+            Log.d("지도객체", it.toString())
+
+//        학원좌표를 지도 시작점으로
+            val neppplusCoord = LatLng(37.57793737795487, 127.03355269913862)
+
+            val cameraUpdate = CameraUpdate.scrollTo(neppplusCoord)
+            it.moveCamera(cameraUpdate)
+
+            val uiSettings = it.uiSettings
+            uiSettings.isCompassEnabled = true
+            uiSettings.isScaleBarEnabled = false
+
+//            선택된 위치를 보여줄 마케 하나만 생성
+
+            val selectedPointMarker = Marker()
+            selectedPointMarker.icon = OverlayImage.fromAsset(R.drawable.map_marker)
+
+            it.setOnMapClickListener { pointF, latLng ->
+                Toast.makeText(mContext, "위도 : ${latLng.latitude}, " +
+                        "경도 : ${latLng.longitude}", Toast.LENGTH_SHORT).show()
+
+                mSelectedLat = latLng.latitude
+                mSelectedLng = latLng.longitude
+
+//                지도 클릭 시 미리 만들어준 마커의 좌표로 연결 => 생성 맵에 띄우자
+                selectedPointMarker.position = LatLng(mSelectedLat, mSelectedLng)
+                selectedPointMarker.map = it
+
+            }
+
+
+        }
     }
+
+
+
 }
 
 

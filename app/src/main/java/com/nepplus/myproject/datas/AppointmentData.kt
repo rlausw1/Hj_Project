@@ -16,5 +16,5 @@ class AppointmentData(
     var createdAt: String,
     var user: UserData
 
-    ) {
+    )   : Serializable  {
 }
